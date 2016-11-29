@@ -9,12 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <modules>
-        <module>backend</module>
-        <module>quizApi</module>
-        <module>report</module>
-    </modules>
-
     <name>Exam2016</name>
     <developers>
         <developer>
@@ -189,7 +183,7 @@
                 <module>backend</module>
                 <module>quizApi</module>
                 <module>report</module>
-                <!--<module>gameApi</module>-->
+                <module>gameApi</module>
             </modules>
 
             <build>

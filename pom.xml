@@ -30,9 +30,11 @@
         <version.jacoco>0.7.7.201606060606</version.jacoco>
         <fs>${file.separator}</fs>
         <swagger-version>1.5.10</swagger-version>
+        <dropwizard.version>0.9.1</dropwizard.version>
     </properties>
 
     <dependencyManagement>
+
         <dependencies>
             <dependency>
                 <groupId>javax</groupId>

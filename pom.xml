@@ -11,7 +11,7 @@
 
     <modules>
         <module>backend</module>
-        <module>frontend</module>
+        <module>quizApi</module>
         <module>report</module>
     </modules>
 
@@ -35,6 +35,7 @@
         <jbossHome>${jbossTarget}/wildfly-${wildfly.version}</jbossHome>
         <version.jacoco>0.7.7.201606060606</version.jacoco>
         <fs>${file.separator}</fs>
+        <swagger-version>1.5.10</swagger-version>
     </properties>
 
 
@@ -99,6 +100,12 @@
 
             <!-- test -->
             <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>3.0.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
@@ -157,13 +164,22 @@
                 <version>3.0.16.Final</version>
             </dependency>
 
+            <!-- api doc -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-jaxrs</artifactId>
+                <version>${swagger-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-hibernate-validations</artifactId>
+                <version>${swagger-version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <build>
-        <!-- will override default url -->
-        <finalName>pg5100_exam</finalName>
-
         <pluginManagement>
             <plugins>
                 <!-- this is needed to run integration tests -->

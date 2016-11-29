@@ -1,5 +1,6 @@
 package com.woact.dolplads.exam2016.quizApi.rest.resource;
 
+import com.woact.dolplads.exam2016.backend.entity.Category;
 import com.woact.dolplads.exam2016.frontend.testUtils.JBossUtil;
 
 import static io.restassured.RestAssured.*;
@@ -7,7 +8,7 @@ import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
 import io.restassured.RestAssured;
-import io.restassured.http.Method;
+import io.restassured.http.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,7 +21,6 @@ public class CategoryResourceTestIT {
     public static void initClass() {
         JBossUtil.waitForJBoss(10);
 
-        // RestAssured configs shared by all the tests
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8080;
         RestAssured.basePath = "/quiz/api/categories";
@@ -30,7 +30,7 @@ public class CategoryResourceTestIT {
     @Test
     public void createAndfindCategories() throws Exception {
         when().request(Method.GET).then().statusCode(200);
-        /*
+
         Category category = new Category("catetext");
 
         int id = given().contentType(ContentType.JSON)
@@ -40,9 +40,7 @@ public class CategoryResourceTestIT {
                 .statusCode(200)
                 .extract().as(Integer.class);
 
-        get("{id}", id).then().assertThat().body("id", equalTo(id)).and().body("text", equalTo(category.getText()));
-
-        */
+        when().request(Method.GET,"{id}",id).then().assertThat().body("id",equalTo(id));
     }
 
 }

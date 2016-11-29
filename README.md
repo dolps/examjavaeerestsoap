@@ -1,3 +1,9 @@
+openshift-version
+====================
+
+# http://tessttt-testingfinal.44fs.preview.openshiftapps.com/
+# https://console.preview.openshift.com/console/project/aatestt/edit/builds/teestt
+
 # Java exam 2016 News Application
 
 The project is divided into three main modules

@@ -1,12 +1,11 @@
 package com.woact.dolplads.exam2016.quizApi.rest.resource;
 
 import com.woact.dolplads.exam2016.backend.entity.Category;
-import com.woact.dolplads.exam2016.frontend.testUtils.JBossUtil;
 
 import static io.restassured.RestAssured.*;
-import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
+import com.woact.dolplads.exam2016.quizApi.rest.JBossUtil;
 import io.restassured.RestAssured;
 import io.restassured.http.*;
 import org.junit.BeforeClass;

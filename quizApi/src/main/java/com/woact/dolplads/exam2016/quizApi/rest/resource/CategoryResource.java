@@ -17,7 +17,7 @@ import java.util.List;
 // http://localhost:8080/pg5100_exam/api/categories/1
 @Api(value = "/categories", description = "CRUD action for categories")
 @Path("/categories")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON)
 public class CategoryResource {
     @EJB

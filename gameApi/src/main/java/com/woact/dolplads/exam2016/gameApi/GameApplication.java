@@ -69,8 +69,8 @@ public class GameApplication extends Application<GameConfiguration> {
         beanConfig.setVersion("0.0.1");
         beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setHost("localhost:9000");
-        beanConfig.setBasePath("/api");
-        beanConfig.setResourcePackage("com.javaee2.dolplads.client");
+        beanConfig.setBasePath("/app/api");
+        beanConfig.setResourcePackage("com.woact.dolplads.exam2016.gameApi");
         beanConfig.setScan(true);
         environment.jersey().register(new ApiListingResource());
         environment.jersey().register(new io.swagger.jaxrs.listing.SwaggerSerializers());

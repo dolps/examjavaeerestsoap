@@ -1,5 +1,7 @@
 package com.woact.dolplads.exam2016.backend.entity;
 
+import com.woact.dolplads.exam2016.backend.annotations.NotEmpty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ public class Category {
     @Id
     @GeneratedValue
     private Long id;
+    @NotEmpty
     private String text;
 
     public Category(String text) {

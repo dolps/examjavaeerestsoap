@@ -8,6 +8,11 @@
     <artifactId>exam2016</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>dtos</module>
+        <module>testapi</module>
+        <module>dropWizzy</module>
+    </modules>
 
     <name>Exam2016</name>
     <developers>
@@ -30,7 +35,10 @@
         <version.jacoco>0.7.7.201606060606</version.jacoco>
         <fs>${file.separator}</fs>
         <swagger-version>1.5.10</swagger-version>
-        <dropwizard.version>0.9.1</dropwizard.version>
+        <dropwizard.version>1.0.3</dropwizard.version>
+        <jackson-version>2.7.4</jackson-version>
+        <hystrix-version>1.5.8</hystrix-version>
+        <rxjava-version>1.2.2</rxjava-version>
     </properties>
 
     <dependencyManagement>
@@ -94,6 +102,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>3.0.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
                 <version>2.53.1</version>
@@ -120,11 +134,24 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- api documentation -->
             <dependency>
                 <groupId>org.jacoco</groupId>
                 <artifactId>org.jacoco.core</artifactId>
                 <version>${version.jacoco}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- integration -->
+            <dependency>
+                <groupId>com.netflix.hystrix</groupId>
+                <artifactId>hystrix-core</artifactId>
+                <version>${hystrix-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.reactivex</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>${rxjava-version}</version>
             </dependency>
 
             <!-- Misc -->
@@ -155,6 +182,61 @@
                 <artifactId>swagger-hibernate-validations</artifactId>
                 <version>${swagger-version}</version>
             </dependency>
+
+            <!-- added for drop wizard -->
+
+
+            <!-- JSON -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.7</version>
+            </dependency>
+
+            <!-- DropWizard -->
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-core</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-testing</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-assets</artifactId>
+                <version>${dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -173,7 +255,6 @@
             </modules>
 
             <build>
-                <finalName>quiz</finalName>
                 <pluginManagement>
                     <plugins>
                         <!-- this is needed to run integration tests -->

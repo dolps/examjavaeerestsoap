@@ -17,10 +17,11 @@ import javax.ws.rs.core.Response;
 
 /**
  * Taken and adapted from:
- *
+ * <p>
  * https://antoniogoncalves.org/2014/07/20/your-tests-assume-that-jboss-is-up-and-running/
  */
 public class JBossUtil {
+
 
     private static ResteasyClient getClient() {
         // Setting digest credentials
@@ -50,12 +51,12 @@ public class JBossUtil {
 
             return response.getStatus() == Response.Status.OK.getStatusCode() && response.readEntity(String.class).contains("running");
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public static void waitForJBoss(int seconds){
+    public static void waitForJBoss(int seconds) {
         for (int i = 0; i < seconds; i++) {
             boolean ready = isJBossUpAndRunning();
             if (!ready) {

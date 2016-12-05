@@ -1,6 +1,7 @@
-package dto;
+package com.woact.dolplads.exam2016.quizApi.rest.transformers;
 
 import com.woact.dolplads.exam2016.backend.entity.Category;
+import dto.CategoryDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class CategoryConverter {
         Objects.requireNonNull(categoryDto);
         Category category = new Category();
         category.setText(categoryDto.text);
+        category.setId(categoryDto.id);
 
         return category;
     }

@@ -1,4 +1,4 @@
-package com.woact.dolplads.exam2016.gameApi.client;
+package com.woact.dolplads.exam2016.gameApi.core;
 
 /**
  * Created by dolplads on 29/11/2016.

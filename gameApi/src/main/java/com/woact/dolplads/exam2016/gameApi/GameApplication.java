@@ -1,14 +1,12 @@
 package com.woact.dolplads.exam2016.gameApi;
 
 
-import com.woact.dolplads.exam2016.gameApi.client.QuizServiceResource;
-import com.woact.dolplads.exam2016.gameApi.core.Game;
+import com.woact.dolplads.exam2016.gameApi.client.GameResource;
 import com.woact.dolplads.exam2016.gameApi.db.GameDAO;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.ScanningHibernateBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -59,7 +57,7 @@ public class GameApplication extends Application<GameConfiguration> {
                 .build(getName());
 
         final GameDAO gameDAO = new GameDAO(hibernate.getSessionFactory());
-        environment.jersey().register(new QuizServiceResource(client, gameDAO));
+        environment.jersey().register(new GameResource(client, gameDAO));
 
 
         setupSwagger(environment);

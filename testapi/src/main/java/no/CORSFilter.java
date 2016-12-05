@@ -1,11 +1,10 @@
-package com.woact.dolplads.exam2016.quizApi.rest;
-
-import java.io.IOException;
+package no;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
+import java.io.IOException;
 
 @Provider
 public class CORSFilter implements ContainerResponseFilter {

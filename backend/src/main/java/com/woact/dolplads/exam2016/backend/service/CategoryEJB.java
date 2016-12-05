@@ -33,4 +33,8 @@ public class CategoryEJB {
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }
+
+    public void update(Category category) {
+        categoryRepository.update(category);
+    }
 }

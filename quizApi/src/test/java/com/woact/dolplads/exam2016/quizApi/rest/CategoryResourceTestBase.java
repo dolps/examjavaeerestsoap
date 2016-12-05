@@ -1,17 +1,11 @@
-package org.pg6100.rest.newsrest.api;
+package com.woact.dolplads.exam2016.quizApi.rest;
 
-import com.google.gson.Gson;
+import dto.CategoryDto;
 import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
 import io.restassured.http.ContentType;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pg6100.rest.newsrest.dto.NewsDto;
-import org.pg6100.utils.web.JBossUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,16 +14,15 @@ import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
-public class NewsRestTestBase {
+public class CategoryResourceTestBase {
 
     @BeforeClass
     public static void initClass() {
         JBossUtil.waitForJBoss(10);
 
-        // RestAssured configs shared by all the tests
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8080;
-        RestAssured.basePath = "/newsrest/api/news";
+        RestAssured.basePath = "/quiz/api/categories";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
@@ -44,10 +37,10 @@ public class NewsRestTestBase {
            Here, we read each resource (GET), and then delete them
            one by one (DELETE)
          */
-        List<NewsDto> list = Arrays.asList(given().accept(ContentType.JSON).get()
+        List<CategoryDto> list = Arrays.asList(given().accept(ContentType.JSON).get()
                 .then()
                 .statusCode(200)
-                .extract().as(NewsDto[].class));
+                .extract().as(CategoryDto[].class));
 
 
         /*

@@ -10,6 +10,80 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>testApi</artifactId>
+    <packaging>war</packaging>
+
+
+    <dependencies>
+        <!-- models/services -->
+        <dependency>
+            <groupId>com.woact.dolplads</groupId>
+            <artifactId>backend</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.woact.dolplads</groupId>
+            <artifactId>dtos</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+        </dependency>
+        <!-- test -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>3.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- for api documentation -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-hibernate-validations</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>test</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId> <!-- villflua download -->
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <java-opts>
+                        -javaagent:${settings.localRepository}${fs}org${fs}jacoco${fs}org.jacoco.agent${fs}${version.jacoco}${fs}org.jacoco.agent-${version.jacoco}-runtime.jar=destfile=${basedir}${fs}target${fs}jacoco-it.exec
+                    </java-opts>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

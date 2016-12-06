@@ -1,4 +1,4 @@
-package dto;
+package com.woact.dolplads.exam2016.dtos;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,5 +13,6 @@ public class CategoryDto {
 
     @ApiModelProperty("the category text")
     public String text;
+
 
 }

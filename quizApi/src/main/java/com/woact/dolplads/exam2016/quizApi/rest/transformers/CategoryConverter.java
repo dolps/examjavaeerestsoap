@@ -1,7 +1,7 @@
 package com.woact.dolplads.exam2016.quizApi.rest.transformers;
 
 import com.woact.dolplads.exam2016.backend.entity.Category;
-import dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.CategoryDto;
 
 import java.util.List;
 import java.util.Objects;

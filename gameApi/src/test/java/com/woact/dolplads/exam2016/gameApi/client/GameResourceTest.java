@@ -9,6 +9,7 @@ import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.*;
 
 import static io.restassured.RestAssured.*;
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.Matchers.*;
 
 import io.restassured.RestAssured;

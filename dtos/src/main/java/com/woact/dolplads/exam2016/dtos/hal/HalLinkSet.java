@@ -1,4 +1,4 @@
-package org.pg6100.rest.pagination.dto.hal;
+package com.woact.dolplads.exam2016.dtos.hal;
 
 import io.swagger.annotations.ApiModelProperty;
 

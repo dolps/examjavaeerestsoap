@@ -13,6 +13,13 @@ public class GameConfiguration extends Configuration {
     @Valid
     @NotNull
     private JerseyClientConfiguration jerseyClient = new JerseyClientConfiguration();
+
+    @JsonProperty("jerseyClient")
+    public JerseyClientConfiguration getJerseyClientConfiguration() {
+        return jerseyClient;
+    }
+
+
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
@@ -25,11 +32,6 @@ public class GameConfiguration extends Configuration {
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
-    }
-
-    @JsonProperty("jerseyClient")
-    public JerseyClientConfiguration getJerseyClientConfiguration() {
-        return jerseyClient;
     }
 
     @NotEmpty

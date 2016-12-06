@@ -1,7 +1,9 @@
 package com.woact.dolplads.exam2016.quizApi.rest.transformers;
 
 import com.woact.dolplads.exam2016.backend.entity.Category;
-import com.woact.dolplads.exam2016.dtos.CategoryDto;
+import com.woact.dolplads.exam2016.backend.entity.SubCategory;
+import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.dto.SubCategoryDTO;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,4 +39,21 @@ public class CategoryConverter {
 
         return category;
     }
+
+    public static SubCategory transformSub(SubCategoryDTO category) {
+        Objects.requireNonNull(category);
+        SubCategory subCategory = new SubCategory();
+        subCategory.setCategoryEnum(category.categoryText);
+        Category parent = new Category();
+        parent.setId(category.parentCategory.id);
+        subCategory.setParentCategory(parent);
+
+        return subCategory;
+    }
+
+    public static List<SubCategory> transformSub(List<SubCategoryDTO> categories) {
+        Objects.requireNonNull(categories);
+        return categories.stream().map(CategoryConverter::transformSub).collect(Collectors.toList());
+    }
+
 }

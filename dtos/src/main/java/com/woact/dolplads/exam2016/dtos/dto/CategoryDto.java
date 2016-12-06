@@ -1,4 +1,4 @@
-package com.woact.dolplads.exam2016.dtos;
+package com.woact.dolplads.exam2016.dtos.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

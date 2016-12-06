@@ -1,19 +1,14 @@
 package com.woact.dolplads.exam2016.quizApi.rest.resource;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 
-import com.woact.dolplads.exam2016.backend.entity.Category;
 import com.woact.dolplads.exam2016.quizApi.rest.CategoryResourceTestBase;
-import io.restassured.RestAssured;
 import io.restassured.http.*;
 
-import com.woact.dolplads.exam2016.quizApi.rest.JBossUtil;
-import dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
 import io.restassured.response.ValidatableResponse;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;

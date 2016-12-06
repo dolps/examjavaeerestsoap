@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by dolplads on 01/12/2016.
  */
-public class GameResourceTestIT {
+public class GameResourceTest {
     @ClassRule
     public static final DropwizardAppRule<GameConfiguration> RULE =
             new DropwizardAppRule<>(GameApplication.class, ResourceHelpers.resourceFilePath("game.yml"));

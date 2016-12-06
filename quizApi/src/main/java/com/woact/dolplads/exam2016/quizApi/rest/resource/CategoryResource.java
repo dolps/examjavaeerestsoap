@@ -4,11 +4,10 @@ import com.google.common.base.Throwables;
 import com.woact.dolplads.exam2016.backend.entity.Category;
 import com.woact.dolplads.exam2016.backend.service.CategoryEJB;
 import com.woact.dolplads.exam2016.quizApi.rest.transformers.CategoryConverter;
-import dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
 
 import javax.ejb.EJB;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.*;
@@ -19,11 +18,9 @@ import java.util.List;
  * Created by dolplads on 29/11/2016.
  * <p>
  * querying
- */
+ */ // Hibernate.initialize(entity.getAddresses());
 // http://localhost:8080/pg5100_exam/api/categories/1
 @Path("/categories")
-@Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
-@Consumes(MediaType.APPLICATION_JSON)
 public class CategoryResource implements CategoryRestApi {
 
     public void query() {
@@ -40,7 +37,6 @@ public class CategoryResource implements CategoryRestApi {
     UriInfo uriInfo;
 
     @Override
-    @POST
     public Response create(CategoryDto category) {
         if (category == null)
             throw new BadRequestException("resource is null");
@@ -57,15 +53,12 @@ public class CategoryResource implements CategoryRestApi {
     }
 
     @Override
-    @GET
     public List<CategoryDto> findAll() {
         return CategoryConverter.transform(categoryEJB.findAll());
     }
 
     @Override
-    @GET
-    @Path("{id}")
-    public CategoryDto findById(@PathParam("id") Long id) {
+    public CategoryDto findById(Long id) {
         Category c = categoryEJB.findById(id);
         if (c == null) {
             //throw new WebApplicationException("Cannot find news with id: " + id, 404);
@@ -76,9 +69,12 @@ public class CategoryResource implements CategoryRestApi {
     }
 
     @Override
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    public String findByIdStrings(Long id) {
+        return "the id: " + id;
+    }
+
+    @Override
+    public void delete(Long id) {
         Category c = categoryEJB.findById(id);
         if (c == null) {
             throw new WebApplicationException("resource could not be found", Response.Status.NOT_FOUND);

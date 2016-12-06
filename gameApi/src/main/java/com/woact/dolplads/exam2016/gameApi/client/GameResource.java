@@ -1,29 +1,35 @@
 package com.woact.dolplads.exam2016.gameApi.client;
 
+import com.netflix.hystrix.HystrixCommand;
+import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.woact.dolplads.exam2016.backend.entity.Category;
 import com.woact.dolplads.exam2016.gameApi.db.GameDAO;
-import dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
 import io.swagger.annotations.Api;
-import org.junit.experimental.categories.Categories;
 
 import javax.ws.rs.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by dolplads on 27/11/2016.
+ * to be reached at http://localhost:9000/app/api/games/hei
+ * swagger at http://localhost:9000/app/
  */
 @Api
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/games")
 public class GameResource {
+    private final UriBuilder base = UriBuilder.fromUri("http://localhost:8080/quiz/api/categories");
     private Client client;
     private GameDAO gameRepository;
     private final String quizServerUrl = "http://localhost:8080/quiz/api";
@@ -39,13 +45,9 @@ public class GameResource {
         this.gameRepository = gameRepository;
     }
 
-    @Produces(MediaType.APPLICATION_JSON)
     @POST
     public Response createCategory(CategoryDto dto) {
-        Entity<CategoryDto> entity = Entity.entity(dto, MediaType.APPLICATION_JSON);
-
-        Response response = client.target(quizServerUrl + "/categories").request().post(entity);
-        System.out.println("response: " + response.getHeaderString("location"));
+        Response response = new PostEntity(dto).execute();
 
         return Response.created(response.getLocation()).build();
     }
@@ -63,5 +65,28 @@ public class GameResource {
         String body = response.readEntity(String.class);
 
         CategoryDto dto = ClientBuilder.newClient().target("link").request().get(CategoryDto.class);
+    }
+
+    private class PostEntity extends HystrixCommand<Response> {
+        private CategoryDto toPost;
+
+        PostEntity(CategoryDto toPost) {
+            super(HystrixCommandGroupKey.Factory.asKey("Interactions with quizapi"));
+            this.toPost = toPost;
+        }
+
+        @Override
+        protected Response run() throws Exception {
+            return client.target(base.build())
+                    .request()
+                    .post(Entity.entity(toPost, MediaType.APPLICATION_JSON));
+        }
+
+        @Override
+        protected Response getFallback() {
+            System.out.println("had to fall back");
+            return Response.serverError().build();
+        }
+
     }
 }

@@ -1,6 +1,5 @@
 package com.woact.dolplads.exam2016.backend.service;
 
-import com.woact.dolplads.exam2016.backend.entity.User;
 import com.woact.dolplads.exam2016.backend.repository.CrudRepository;
 
 import java.util.List;

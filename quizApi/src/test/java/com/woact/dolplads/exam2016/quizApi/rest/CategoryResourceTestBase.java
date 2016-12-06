@@ -1,6 +1,6 @@
 package com.woact.dolplads.exam2016.quizApi.rest;
 
-import dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.After;

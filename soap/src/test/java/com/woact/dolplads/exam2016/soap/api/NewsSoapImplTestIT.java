@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 /**
  * Created by dolplads on 09/12/2016.
  */
-public class NewsSoapImplTest {
+public class NewsSoapImplTestIT {
     static NewsSoap ws;
 
     @BeforeClass

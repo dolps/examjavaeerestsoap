@@ -1,5 +1,4 @@
-template: Hello, %s!
-defaultName: Stranger
+testUrl: 8090
 server:
   applicationContextPath: /app
   rootPath: '/api/*'

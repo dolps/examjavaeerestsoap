@@ -1,14 +1,13 @@
 package com.woact.dolplads.exam2016.quizApi.rest.resource;
 
 import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
+import com.woact.dolplads.exam2016.dtos.dto.SubCategoryDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.jaxrs.PATCH;
 
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -25,37 +24,43 @@ public interface CategoryRestApi {
     @ApiOperation("create a category")
     Response create(@ApiParam("the category to create") CategoryDto category);
 
-    @ApiOperation("Find category by id")
-    Response deprecatedFindById(@ApiParam("numeric id represent pk of category") Long id);
-
-
     @GET
-    @ApiOperation("findAll all categories")
-    List<CategoryDto> findAll();
+    @ApiOperation("find all categories")
+    List<CategoryDto> findAll(@ApiParam("expand optional returns subcategories as well if true")
+                              @DefaultValue("false") @QueryParam("expand") boolean expand);
 
-    @ApiOperation(value = "get with text plain")
+
+    @ApiOperation(value = "get category by id")
     @GET
     @Path("{id}")
-    @Produces({"application/vnd.github.v2+json; charset=UTF-8", "application/vnd.pg6100.news+json; charset=UTF-8; version=1"})
-    CategoryDto findById(@PathParam("id") Long id);
+    CategoryDto findById(@PathParam("id") Long id, @DefaultValue("false") @QueryParam("expand") boolean expand);
 
-
-    @ApiOperation(value = "get with text plain")
-    @Produces({"application/vnd.pg6100.news+json; charset=UTF-8; version=1"})
-    @Consumes({"application/vnd.pg6100.news+json; charset=UTF-8; version=1"})
-    @GET
-    @Path("id/id/{id}")
-    String findByIdStrings(@PathParam("id") Long id);
-
+    @ApiOperation(value = "delete category by id, make sure to delete all its subcategories first")
     @DELETE
     @Path("{id}")
     void delete(@PathParam("id") Long id);
 
     @PUT
     @Path("{id}")
-    void update(@PathParam("id") Long id, CategoryDto categoryDto);
+    void replace(@PathParam("id") Long id, CategoryDto categoryDto);
 
-    @ApiOperation("deprecatedUpdate a category")
-    public Response deprecatedUpdate(@ApiParam("numeric id represent pk of category") @NotNull(message = "id should not be null") Long id,
-                                     @ApiParam("The updated category, cannot change id") CategoryDto categoryDto);
+    @PATCH
+    @Path("{id}")
+    @Consumes("application/merge-patch+json")
+    void partialUpdate(@ApiParam("partial update patch exclude subcategories") @PathParam("id") Long id, String patch);
+
+    /**
+     * SubCATEGORY operations:
+     */
+
+    @GET
+    @Path("{id}/subcategories")
+    Response findSubcategoriesById(@PathParam("id") Long id);
+
+
+    @POST
+    @Path("{id}/subcategories")
+    @ApiOperation("add a new subcategory")
+    Response create(@PathParam("id") Long id, @ApiParam("the subcategory to create") SubCategoryDTO subCategory);
+
 }

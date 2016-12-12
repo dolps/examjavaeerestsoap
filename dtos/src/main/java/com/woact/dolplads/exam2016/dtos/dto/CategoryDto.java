@@ -3,6 +3,8 @@ package com.woact.dolplads.exam2016.dtos.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+
 /**
  * Created by dolplads on 30/11/2016.
  */
@@ -11,8 +13,10 @@ public class CategoryDto {
     @ApiModelProperty("unique id for category")
     public Long id;
 
-    @ApiModelProperty("the category text")
-    public String text;
+    @ApiModelProperty("the category name")
+    public String name;
+
+    public List<SubCategoryDTO> subCategoryDTOList;
 
 
 }

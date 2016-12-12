@@ -86,6 +86,10 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -128,12 +132,6 @@
           <groupId>io.rest-assured</groupId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>1.4.192</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
   <dependencyManagement>

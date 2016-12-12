@@ -1,8 +1,13 @@
 package com.woact.dolplads.exam2016.quizApi.rest.resource;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import com.woact.dolplads.exam2016.backend.entity.Category;
+import com.woact.dolplads.exam2016.backend.entity.SubCategory;
 import com.woact.dolplads.exam2016.backend.service.CategoryEJB;
+import com.woact.dolplads.exam2016.backend.service.SubCategoryEJB;
+import com.woact.dolplads.exam2016.dtos.dto.SubCategoryDTO;
 import com.woact.dolplads.exam2016.quizApi.rest.transformers.CategoryConverter;
 import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
 
@@ -33,6 +38,8 @@ public class CategoryResource implements CategoryRestApi {
 
     @EJB
     private CategoryEJB categoryEJB;
+    @EJB
+    private SubCategoryEJB subCategoryEJB;
     @Context
     UriInfo uriInfo;
 
@@ -40,9 +47,9 @@ public class CategoryResource implements CategoryRestApi {
     public Response create(CategoryDto category) {
         if (category == null)
             throw new BadRequestException("resource is null");
-        Long id = null;
+        Long id;
         try {
-            id = categoryEJB.createCategory(CategoryConverter.transform(category)).getId();
+            id = categoryEJB.create(CategoryConverter.transform(category)).getId();
         } catch (Exception e) {
             throw wrapException(e);
         }
@@ -53,24 +60,21 @@ public class CategoryResource implements CategoryRestApi {
     }
 
     @Override
-    public List<CategoryDto> findAll() {
-        return CategoryConverter.transform(categoryEJB.findAll());
+    public List<CategoryDto> findAll(boolean expand) {
+        if (expand) {
+            return CategoryConverter.transform(categoryEJB.findAllExpanded(), true);
+        } else {
+            return CategoryConverter.transform(categoryEJB.findAll(), false);
+        }
     }
 
     @Override
-    public CategoryDto findById(Long id) {
-        Category c = categoryEJB.findById(id);
-        if (c == null) {
-            //throw new WebApplicationException("Cannot find news with id: " + id, 404);
-            throw new NotFoundException("resource not found");
+    public CategoryDto findById(Long id, boolean expand) {
+        if (expand) {
+            return CategoryConverter.transform(categoryEJB.findByIdExpanded(id), true);
         }
 
-        return CategoryConverter.transform(c);
-    }
-
-    @Override
-    public String findByIdStrings(Long id) {
-        return "the id: " + id;
+        return CategoryConverter.transform(categoryEJB.findById(id), false);
     }
 
     @Override
@@ -79,13 +83,11 @@ public class CategoryResource implements CategoryRestApi {
         if (c == null) {
             throw new WebApplicationException("resource could not be found", Response.Status.NOT_FOUND);
         }
-        categoryEJB.removeCategory(c);
+        categoryEJB.remove(c);
     }
 
     @Override
-    @PUT
-    @Path("{id}")
-    public void update(@PathParam("id") Long id, CategoryDto categoryDto) {
+    public void replace(Long id, CategoryDto categoryDto) {
         if (!id.equals(categoryDto.id)) {
             throw new WebApplicationException("ids dont match, not allowed to change id on deprecatedUpdate", 409);//Response.Status.CONFLICT
         }
@@ -101,6 +103,60 @@ public class CategoryResource implements CategoryRestApi {
         }
     }
 
+    @Override
+    public void partialUpdate(Long id, String patch) {
+        Category c = categoryEJB.findById(id);
+        if (c == null) {
+            throw new WebApplicationException("resource not found", 404);
+        }
+
+        ObjectMapper jackson = new ObjectMapper();
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = jackson.readValue(patch, JsonNode.class);
+        } catch (Exception e) {
+            throw new WebApplicationException("Invalid JSON data as input: " + e.getMessage(), 400);
+        }
+        if (jsonNode.has("id")) {
+            throw new WebApplicationException(
+                    "Cannot modify the counter id from " + id + " to " + jsonNode.get("id"), 409);
+        }
+
+        String newName = c.getName();
+        if (jsonNode.has("name")) {
+            JsonNode nameNode = jsonNode.get("name");
+            if (nameNode.isNull()) {
+                newName = null;
+            } else if (nameNode.isTextual()) {
+                newName = nameNode.asText();
+            } else {
+                throw new WebApplicationException("Invalid JSON. Non-string name", 400);
+            }
+
+            c.setName(newName);
+            categoryEJB.update(c);
+        }
+    }
+
+    //     @Path("{id}/subcategories")
+    @Override
+    public Response findSubcategoriesById(Long id) {
+        return Response.status(301).location(UriBuilder.fromUri("subcategories?parentId=" + id).build()).build();
+    }
+
+    // permanent redirect “/subcategories?parentId=id”.
+    //     @Path("{id}/subcategories")
+    @Override
+    public Response create(Long id, SubCategoryDTO subCategory) {
+        SubCategory subCat = CategoryConverter.transformSub(subCategory);
+        subCat = subCategoryEJB.create(subCat);
+        System.out.println("testtest" + subCat.getName() + " " + subCat.getId());
+        URI categoryUri = uriInfo.getBaseUriBuilder().path("/subcategories/" + subCat.getId()).build();
+        return Response.created(categoryUri).build();
+
+        //return Response.status(301).location(UriBuilder.fromUri("subcategories?parentId=" + id).build()).build();
+    }
+
     private WebApplicationException wrapException(Exception e) throws WebApplicationException {
 
         Throwable cause = Throwables.getRootCause(e);
@@ -111,18 +167,12 @@ public class CategoryResource implements CategoryRestApi {
         }
     }
 
+    /*
     @Override
     @PUT
     @Path("id/{id}")
     public Response deprecatedUpdate(@PathParam("id") Long id, CategoryDto categoryDto) {
         return Response.status(301).location(UriBuilder.fromUri("categories/" + id).build()).build();
     }
-
-    @Override
-    @GET
-    @Path("/id/{id}")
-    public Response deprecatedFindById(@PathParam("id") Long id) {
-        return Response.status(301).location(UriBuilder.fromUri("categories/" + id).build()).build();
-    }
-
+    */
 }

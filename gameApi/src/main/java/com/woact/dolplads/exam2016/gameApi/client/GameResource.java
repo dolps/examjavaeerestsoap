@@ -29,20 +29,22 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/games")
 public class GameResource {
-    private final UriBuilder base = UriBuilder.fromUri("http://localhost:8080/quiz/api/categories");
+    private final UriBuilder base;
     private Client client;
     private GameDAO gameRepository;
-    private final String quizServerUrl = "http://localhost:8080/quiz/api";
+    //private final String quizServerUrl = "http://localhost:8080/quiz/api";
 
+    @Produces(MediaType.TEXT_PLAIN)
     @GET
     @Path("/hei")
     public String hello() {
-        return "hello";
+        return "helloi";
     }
 
-    public GameResource(Client client, GameDAO gameRepository) {
+    public GameResource(Client client, GameDAO gameRepository, String externalHost) {
         this.client = client;
         this.gameRepository = gameRepository;
+        this.base = UriBuilder.fromUri(externalHost + "/quiz/api/categories");
     }
 
     @POST
@@ -54,7 +56,7 @@ public class GameResource {
 
     @GET
     public List<CategoryDto> getCategories() {
-        CategoryDto dtos[] = client.target(quizServerUrl + "/categories").request().get(CategoryDto[].class);
+        CategoryDto dtos[] = client.target(base.build()).request().get(CategoryDto[].class);
 
         return new ArrayList<>(Arrays.asList(dtos));
     }

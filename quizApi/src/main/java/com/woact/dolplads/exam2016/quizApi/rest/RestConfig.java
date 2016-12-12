@@ -1,6 +1,7 @@
 package com.woact.dolplads.exam2016.quizApi.rest;
 
 import com.woact.dolplads.exam2016.quizApi.rest.resource.CategoryResource;
+import com.woact.dolplads.exam2016.quizApi.rest.resource.QuizResource;
 import com.woact.dolplads.exam2016.quizApi.rest.resource.SubCategoryResource;
 import io.swagger.jaxrs.config.BeanConfig;
 
@@ -30,6 +31,7 @@ public class RestConfig extends Application {
         Set<Class<?>> resources = new HashSet<>();
         resources.add(CategoryResource.class);
         resources.add(SubCategoryResource.class);
+        resources.add(QuizResource.class);
         resources.add(CORSFilter.class);
 
         resources.add(io.swagger.jaxrs.listing.ApiListingResource.class);

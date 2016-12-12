@@ -13,10 +13,7 @@ public class SubCategoryDTO {
     @ApiModelProperty(value = "unique id for subcategory", readOnly = true)
     public Long id;
 
-    @NotEmpty
-    @Deprecated
-    @ApiModelProperty("the category text")
-    public CategoryEnum categoryText;
     @ApiModelProperty(value = "the parent category", required = true)
     public CategoryDto parentCategory;
+    public String name;
 }

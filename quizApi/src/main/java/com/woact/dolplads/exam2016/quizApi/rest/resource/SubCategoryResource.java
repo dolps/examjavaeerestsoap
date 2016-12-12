@@ -1,9 +1,8 @@
 package com.woact.dolplads.exam2016.quizApi.rest.resource;
 
 import com.google.common.base.Throwables;
-import com.woact.dolplads.exam2016.backend.entity.Category;
+import com.woact.dolplads.exam2016.backend.entity.SubCategory;
 import com.woact.dolplads.exam2016.backend.service.SubCategoryEJB;
-import com.woact.dolplads.exam2016.dtos.dto.CategoryDto;
 import com.woact.dolplads.exam2016.dtos.dto.SubCategoryDTO;
 import com.woact.dolplads.exam2016.quizApi.rest.transformers.CategoryConverter;
 
@@ -17,6 +16,7 @@ import java.util.List;
 /**
  * Created by dolplads on 05/12/2016.
  */
+
 @Path("subcategories")
 @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -27,7 +27,6 @@ public class SubCategoryResource implements SubCategoryRestApi {
     UriInfo uriInfo;
 
     @Override
-    @POST
     public Response create(SubCategoryDTO subCategory) {
         if (subCategory == null)
             throw new BadRequestException("resource is null");
@@ -41,6 +40,20 @@ public class SubCategoryResource implements SubCategoryRestApi {
         URI categoryUri = uriInfo.getAbsolutePathBuilder().path("" + id).build();
         //return Response.created(uriInfo.getBaseUriBuilder().path("/categories/" + id).build()).build();
         return Response.created(categoryUri).build();
+    }
+
+    @Override
+    public List<SubCategoryDTO> findAll(Long id) {
+        if (id != null) {
+            return CategoryConverter.transformAllSubs(subCategoryEJB.findAllByParentId(id));
+        }
+
+        return CategoryConverter.transformAllSubs(subCategoryEJB.findAll());
+    }
+
+    @Override
+    public SubCategoryDTO findById(Long id) {
+        return CategoryConverter.transformSub(subCategoryEJB.findById(id));
     }
 
     private WebApplicationException wrapException(Exception e) throws WebApplicationException {

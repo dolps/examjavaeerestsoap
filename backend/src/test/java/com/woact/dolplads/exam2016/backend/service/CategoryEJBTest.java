@@ -28,21 +28,24 @@ public class CategoryEJBTest extends ArquillianTestHelper {
     }
 
     @Test
-    public void createCategory() throws Exception {
-        Category c = new Category("text");
-        c = categoryEJB.createCategory(c);
+    public void testCanCrud() throws Exception {
+        int size = categoryEJB.findAll().size();
+        Category category = new Category("text");
+        category = categoryEJB.create(category);
 
-        assertTrue(c.getId() != null);
-    }
+        assertTrue(category.getId() != null);
+        assertEquals(size + 1, categoryEJB.findAll().size());
 
-    @Test
-    public void removeCategory() throws Exception {
-        Category c = new Category("text2");
-        c = categoryEJB.createCategory(c);
-        assertTrue(c.getId() != null);
+        category = categoryEJB.findById(category.getId());
+        assertEquals("text", category.getName());
 
-        categoryEJB.removeCategory(c);
-        assertTrue(categoryEJB.findById(c.getId()) == null);
+        category.setName("text2");
+        category = categoryEJB.update(category);
+        category = categoryEJB.findById(category.getId());
+        assertEquals("text2", category.getName());
+
+        categoryEJB.remove(category);
+        assertEquals(size, categoryEJB.findAll().size());
     }
 
 }

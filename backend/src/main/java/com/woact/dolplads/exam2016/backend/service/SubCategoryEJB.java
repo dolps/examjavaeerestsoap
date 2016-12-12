@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by dolplads on 05/12/2016.
@@ -23,5 +24,9 @@ public class SubCategoryEJB extends CrudEJB<Long, SubCategory> {
     public SubCategoryEJB(SubCategoryRepository subCategoryRepository) {
         super(subCategoryRepository);
         this.subCategoryRepository = subCategoryRepository;
+    }
+
+    public List<SubCategory> findAllByParentId(Long id) {
+        return subCategoryRepository.findAllByParentId(id);
     }
 }

@@ -40,7 +40,6 @@ public class GameApplication extends Application<GameConfiguration> {
     @Override
     public void initialize(final Bootstrap<GameConfiguration> bootstrap) {
         bootstrap.addBundle(hibernate);
-
         bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html", "static"));
         bootstrap.addBundle(new AssetsBundle("/assets/css", "/css", null, "b"));
         bootstrap.addBundle(new AssetsBundle("/assets/fonts", "/fonts", null, "c"));
@@ -57,7 +56,8 @@ public class GameApplication extends Application<GameConfiguration> {
         final Client client = new JerseyClientBuilder().build();
         final GameDAO gameDAO = new GameDAO(hibernate.getSessionFactory());
 
-        environment.jersey().register(new GameResource(client, gameDAO));
+        String externalHost = "http://localhost:" + configuration.getTestUrl();
+        environment.jersey().register(new GameResource(client, gameDAO, externalHost));
 
 
         setupHystrix();

@@ -27,10 +27,12 @@ public class GameResourceTest {
     public static final DropwizardAppRule<GameConfiguration> RULE =
             new DropwizardAppRule<>(GameApplication.class, ResourceHelpers.resourceFilePath("game.yml"));
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8080);
+    public WireMockRule wireMockRule = new WireMockRule(Integer.parseInt(RULE.getConfiguration().getTestUrl()));
 
     @BeforeClass
     public static void setupClass() {
+        System.out.println("halla" + RULE.getConfiguration().getTestUrl());
+
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 9000;
         RestAssured.basePath = "/app/api/games";
@@ -42,6 +44,8 @@ public class GameResourceTest {
         stubRandomQuizzes("1L");
         //String res = when().request(Method.GET).then().assertThat().extract().as(String.class);
         //System.out.println(res);
+        String hello = given().accept(ContentType.TEXT).when().get("/hei").then().statusCode(200).extract().asString();
+        assertEquals(hello, "helloi");
     }
 
 

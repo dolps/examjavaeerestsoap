@@ -1,6 +1,6 @@
 testUrl: 8080
 server:
-  applicationContextPath: /app
+  applicationContextPath: /game
   rootPath: '/api/*'
   applicationConnectors:
   - type: http
@@ -8,25 +8,3 @@ server:
   adminConnectors:
   - type: http
     port: 9001
-
-
-# Database settings.
-database:
-
-  # the name of your JDBC driver
-  driverClass: org.h2.Driver
-
-  # the username
-  user: sa
-
-  # the password
-  password: sa
-
-  # the JDBC URL
-  url: jdbc:h2:mem:test;INIT=CREATE SCHEMA IF NOT EXISTS TEST;DB_CLOSE_ON_EXIT=FALSE // closes automatically
-
-  properties:
-      charSet: UTF-8
-      hibernate.dialect: org.hibernate.dialect.H2Dialect
-      hibernate.hbm2ddl.auto: create-drop
-      hibernate.show_sql: true

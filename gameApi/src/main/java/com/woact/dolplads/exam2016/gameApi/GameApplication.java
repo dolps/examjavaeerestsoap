@@ -3,12 +3,8 @@ package com.woact.dolplads.exam2016.gameApi;
 
 import com.netflix.config.ConfigurationManager;
 import com.woact.dolplads.exam2016.gameApi.client.GameResource;
-import com.woact.dolplads.exam2016.gameApi.db.GameDAO;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
-import io.dropwizard.db.DataSourceFactory;
-import io.dropwizard.hibernate.HibernateBundle;
-import io.dropwizard.hibernate.ScanningHibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.swagger.jaxrs.config.BeanConfig;
@@ -24,14 +20,6 @@ public class GameApplication extends Application<GameConfiguration> {
         new GameApplication().run(args);
     }
 
-    private final HibernateBundle<GameConfiguration> hibernate =
-            new ScanningHibernateBundle<GameConfiguration>("com.woact.dolplads.exam2016.gameApi.core") {
-                @Override
-                public DataSourceFactory getDataSourceFactory(GameConfiguration configuration) {
-                    return configuration.getDataSourceFactory();
-                }
-            };
-
     @Override
     public String getName() {
         return "game";
@@ -39,7 +27,6 @@ public class GameApplication extends Application<GameConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<GameConfiguration> bootstrap) {
-        bootstrap.addBundle(hibernate);
         bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html", "static"));
         bootstrap.addBundle(new AssetsBundle("/assets/css", "/css", null, "b"));
         bootstrap.addBundle(new AssetsBundle("/assets/fonts", "/fonts", null, "c"));
@@ -54,10 +41,9 @@ public class GameApplication extends Application<GameConfiguration> {
                     final Environment environment) throws Exception {
 
         final Client client = new JerseyClientBuilder().build();
-        final GameDAO gameDAO = new GameDAO(hibernate.getSessionFactory());
 
         String externalHost = "http://localhost:" + configuration.getTestUrl();
-        environment.jersey().register(new GameResource(client, gameDAO, externalHost));
+        environment.jersey().register(new GameResource(client,externalHost));
 
 
         setupHystrix();
@@ -82,7 +68,7 @@ public class GameApplication extends Application<GameConfiguration> {
         beanConfig.setVersion("0.0.1");
         beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setHost("localhost:9000");
-        beanConfig.setBasePath("/app/api");
+        beanConfig.setBasePath("/game/api");
         beanConfig.setResourcePackage("com.woact.dolplads.exam2016.gameApi");
         beanConfig.setScan(true);
         environment.jersey().register(new ApiListingResource());

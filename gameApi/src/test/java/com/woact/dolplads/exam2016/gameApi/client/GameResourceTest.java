@@ -31,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by dolplads on 01/12/2016.
  */
-public class GameResourceTestNot extends GameApplicationTestBase {
+public class GameResourceTest extends GameApplicationTestBase {
     @ClassRule
     public static final DropwizardAppRule<GameConfiguration> RULE =
             new DropwizardAppRule<>(GameApplication.class, ResourceHelpers.resourceFilePath("game.yml"));

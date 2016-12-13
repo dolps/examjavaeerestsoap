@@ -90,6 +90,9 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -189,7 +192,7 @@
     <dropwizard.version>0.9.1</dropwizard.version>
     <swagger-version>1.5.10</swagger-version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <mainClass>com.javaee2.dolplads.GameApplication</mainClass>
+    <mainClass>com.woact.dolplads.exam2016.gameApi.GameApplication</mainClass>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>

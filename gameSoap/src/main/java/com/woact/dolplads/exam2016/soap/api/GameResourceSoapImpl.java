@@ -30,32 +30,26 @@ public class GameResourceSoapImpl implements GameResourceSoap {
     public GameDto getRandomGame() {
         Response quizResponse = new GetQuizCommand("http://localhost:2222/quiz/api/quizzes/random").execute();
 
-
         if (quizResponse.getStatus() == 200) {
             QuizDto dto = new Gson().fromJson(quizResponse.getEntity().toString(), QuizDto.class);
             return new GameDto(dto.id, dto.question, dto.answers);
         } else { // configuration of wiremock not allways stable (safeguarding for the sake of the exam here..)
-            return new GameDto(1L, "questions", null);
+            throw new RuntimeException("resource unavailable"); // should have been a 500...
         }
     }
 
     @Override
     public ResultDto postAnswer(AnswerDto answerDto) {
-        /*
-        Response quizResponse = new GetQuizCommand(client, base.build() + "/" + answerDto.quizId).execute();
-        QuizDto dto = new Gson().fromJson(quizResponse.getEntity().toString(), QuizDto.class);
+        Response quizResponse = new GetQuizCommand("http://localhost:2222/quiz/api/quizzes/" + answerDto.quizId).execute();
 
-        if (dto.correctIndex == answerDto.correctAnswerIndex) {
-            return new ResultDto(true);
-        } else {
-            return new ResultDto(false);
+        if (quizResponse.getStatus() == 200) {
+            QuizDto dto = new Gson().fromJson(quizResponse.getEntity().toString(), QuizDto.class);
+            if (dto.correctIndex == answerDto.correctAnswerIndex) {
+                return new ResultDto(true);
+            } else {
+                return new ResultDto(false);
+            }
         }
-        */
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public String getHello() {
-        return "hello";
+        return new ResultDto(false);
     }
 }

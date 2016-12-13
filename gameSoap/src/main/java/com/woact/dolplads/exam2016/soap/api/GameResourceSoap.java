@@ -15,6 +15,4 @@ public interface GameResourceSoap {
     GameDto getRandomGame();
 
     ResultDto postAnswer(AnswerDto answerDto);
-
-    String getHello();
 }

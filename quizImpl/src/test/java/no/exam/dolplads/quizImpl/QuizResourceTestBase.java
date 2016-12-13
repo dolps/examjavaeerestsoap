@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import no.exam.dolplads.quizApi.dto.CategoryDto;
 import no.exam.dolplads.quizApi.dto.ListDto;
 import no.exam.dolplads.quizApi.dto.SubCategoryDTO;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -35,19 +36,11 @@ public class QuizResourceTestBase {
     }
 
     @Before
-    //@After
+    @After
     public void clean() throws Exception {
-
         int total = Integer.MAX_VALUE;
 
-        /*
-            as the REST API does not return the whole state of the database (even,
-            if I use an infinite "limit") I need to keep doing queries until the totalSize is 0
-         */
-
         while (total > 0) {
-
-            //seems there are some limitations when handling generics
             ListDto<?> listDto = given()
                     .queryParam("limit", Integer.MAX_VALUE)
                     .get()
@@ -88,23 +81,6 @@ public class QuizResourceTestBase {
         RestAssured.basePath = baseTemp;
     }
 
-    /*
-        @Before
-        @After
-        public void clean() throws Exception {
-            List<QuizDto> quizDtos = Arrays.asList(given().accept(ContentType.JSON).get()
-                    .then()
-                    .statusCode(200)
-                    .extract().as(QuizDto[].class));
-
-            quizDtos.stream().forEach(dto ->
-                    given().pathParam("id", dto.id)
-                            .delete("/{id}")
-                            .then().statusCode(204));
-
-            get().then().statusCode(200).body("size()", is(0));
-        }
-    */
     private void createTestCategory() throws Exception {
         categoryDto = new CategoryDto();
         categoryDto.name = "parentCategory";
@@ -130,7 +106,6 @@ public class QuizResourceTestBase {
                 .extract().header("location");
     }
 
-    // url == /categories/{id}/subcategories
     private String postSubCategory(SubCategoryDTO subCategoryDTO) {
         return given().contentType(ContentType.JSON)
                 .body(subCategoryDTO)

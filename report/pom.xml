@@ -34,21 +34,17 @@
             <artifactId>gameApi</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--
         <dependency>
-            <groupId>com.woact.dolplads</groupId>
-            <artifactId>quizImpl</artifactId>
+            <groupId>no.exam.dolplads</groupId>
+            <artifactId>gameCommands</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>no.exam.dolplads</groupId>
+            <artifactId>gameSoap</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
-        <dependency>
-        <dependency>
-            <groupId>com.woact.dolplads</groupId>
-            <artifactId>gameRest</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        -->
     </dependencies>
 
 

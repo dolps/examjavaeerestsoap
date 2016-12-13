@@ -2,9 +2,9 @@ package no.exam.dolplads.gameApi;
 
 import com.google.gson.Gson;
 import no.exam.dolplads.quizApi.dto.QuizDto;
-import no.exam.dolplads.gameApi.dto.AnswerDto;
-import no.exam.dolplads.gameApi.dto.GameDto;
-import no.exam.dolplads.gameApi.dto.ResultDto;
+import no.exam.dolplads.gameCommands.dto.AnswerDto;
+import no.exam.dolplads.gameCommands.dto.GameDto;
+import no.exam.dolplads.gameCommands.dto.ResultDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.BeforeClass;

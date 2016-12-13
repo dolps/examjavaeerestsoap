@@ -7,9 +7,6 @@
     <groupId>no.exam.dolplads</groupId>
     <artifactId>examEE</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>gameCommands</module>
-    </modules>
     <packaging>pom</packaging>
 
     <developers>
@@ -234,6 +231,12 @@
                 <artifactId>httpclient</artifactId>
                 <version>4.5.2</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.tomakehurst</groupId>
+                <artifactId>wiremock-standalone</artifactId>
+                <version>2.2.1</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -249,17 +252,9 @@
                 <module>quizApi</module>
                 <module>quizImpl</module>
                 <module>gameApi</module>
+                <module>gameCommands</module>
                 <module>report</module>
-                <!--
-
-                                <module>soap</module>
-                                <module>quizApi</module>
-
-                                <module>quizImpl</module>
-                                <module>report</module>
-                                <module>gameApi</module>
-
-                                -->
+                <module>gameSoap</module>
             </modules>
 
             <build>

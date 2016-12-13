@@ -5,8 +5,8 @@
 
 
     <parent>
-        <groupId>com.woact.dolplads</groupId>
-        <artifactId>exam2016</artifactId>
+        <groupId>no.exam.dolplads</groupId>
+        <artifactId>examEE</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <version>1.0-SNAPSHOT</version>
@@ -16,7 +16,7 @@
 
     <artifactId>gameApi</artifactId>
     <properties>
-        <mainClass>com.woact.dolplads.exam2016.gameApi.GameApplication</mainClass>
+        <mainClass>no.exam.dolplads.gameApi.GameApplication</mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dropwizard.version>0.9.1</dropwizard.version>
@@ -74,7 +74,6 @@
                 <artifactId>jackson-databind</artifactId>
                 <scope>compile</scope>
             </dependency>
-
         </dependencies>
 
     </dependencyManagement>
@@ -118,17 +117,18 @@
             <artifactId>dropwizard-jdbi</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.javaee2.dolplads</groupId>
-            <artifactId>backend</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-jaxrs</artifactId>
         </dependency>
+        <!--
         <dependency>
-            <groupId>com.woact.dolplads</groupId>
-            <artifactId>dtos</artifactId>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>no.exam.dolplads</groupId>
+            <artifactId>quizApi</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -182,40 +182,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
             <!-- make sure we calculate code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -227,6 +193,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
 </project>

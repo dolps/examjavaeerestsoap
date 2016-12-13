@@ -115,13 +115,7 @@ public class QuizResource implements QuizRest {
     }
 
     @Override
-    public void replace(Long id, CategoryDto categoryDto) {
-
-    }
-
-    @Override
     public void partialUpdate(Long id, String patch) {
-
         Quiz quiz = quizEJB.findById(id);
         if (quiz == null) {
             throw new WebApplicationException("resource not found", 404);
@@ -170,7 +164,6 @@ public class QuizResource implements QuizRest {
 
     @Override
     public QuizDto findRandomQuiz() {
-
         Quiz quiz = quizEJB.findRandom();
         if (quiz == null) {
             throw new WebApplicationException("no quizzes found", 404);
@@ -178,7 +171,6 @@ public class QuizResource implements QuizRest {
 
         return QuizConverter.transform(quiz);
     }
-
 
     private WebApplicationException wrapException(Exception e) throws WebApplicationException {
 

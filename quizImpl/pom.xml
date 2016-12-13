@@ -69,6 +69,10 @@
             <groupId>io.swagger</groupId>
             <artifactId>swagger-hibernate-validations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -79,7 +83,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId> <!-- villflua download -->
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
             <plugin>
@@ -91,7 +95,6 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
-                    <skip>false</skip>
                     <java-opts>
                         -javaagent:${settings.localRepository}${fs}org${fs}jacoco${fs}org.jacoco.agent${fs}${version.jacoco}${fs}org.jacoco.agent-${version.jacoco}-runtime.jar=destfile=${basedir}${fs}target${fs}jacoco-it.exec
                     </java-opts>

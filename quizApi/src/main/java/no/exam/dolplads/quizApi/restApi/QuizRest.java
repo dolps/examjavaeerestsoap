@@ -28,30 +28,31 @@ public interface QuizRest {
     @GET
     @ApiOperation("find all quizzes")
     ListDto<QuizDto> findAll(
+            @ApiParam("marks the start of request")
             @DefaultValue("0") @QueryParam("offset") int offset,
+            @ApiParam("limits result")
             @DefaultValue("10") @QueryParam("limit") int limit,
+            @ApiParam("return only the once by a given subCategory")
             @DefaultValue("-1") @QueryParam("filter") long subCategoryId);
 
 
     @ApiOperation(value = "get quiz by id")
     @GET
     @Path("{id}")
-    QuizDto findById(@PathParam("id") Long id);
+    QuizDto findById(@ApiParam("the id of the quiz") @PathParam("id") Long id);
 
     @ApiOperation(value = "delete quiz by id")
     @DELETE
     @Path("{id}")
-    void delete(@PathParam("id") Long id);
+    void delete(@ApiParam("id of quiz") @PathParam("id") Long id);
 
-    @PUT
-    @Path("{id}")
-    void replace(@PathParam("id") Long id, CategoryDto categoryDto);
-
+    @ApiOperation("partial update of category")
     @PATCH
     @Path("{id}")
     @Consumes("application/merge-patch+json")
-    void partialUpdate(@ApiParam("partial update") @PathParam("id") Long id, String patch);
+    void partialUpdate(@ApiParam("partial update") @PathParam("id") Long id, @ApiParam("applied patch") String patch);
 
+    @ApiOperation("find a random quiz, make sure to have created some first")
     @GET
     @Path("/random")
     QuizDto findRandomQuiz();

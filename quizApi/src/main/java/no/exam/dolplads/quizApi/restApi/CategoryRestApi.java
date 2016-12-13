@@ -33,34 +33,40 @@ public interface CategoryRestApi {
     @ApiOperation(value = "get category by id")
     @GET
     @Path("{id}")
-    CategoryDto findById(@PathParam("id") Long id, @DefaultValue("false") @QueryParam("expand") boolean expand);
+    CategoryDto findById(@ApiParam("id of category") @PathParam("id") Long id,
+                         @ApiParam("boolean option to get subcategories with response object")
+                         @DefaultValue("false") @QueryParam("expand") boolean expand);
 
     @ApiOperation(value = "delete category by id, make sure to delete all its subcategories first")
     @DELETE
     @Path("{id}")
-    void delete(@PathParam("id") Long id);
+    void delete(@ApiParam("id of the category") @PathParam("id") Long id);
 
+    @ApiOperation("Replace a category")
     @PUT
     @Path("{id}")
-    void replace(@PathParam("id") Long id, CategoryDto categoryDto);
+    void replace(@ApiParam("id of the category") @PathParam("id") Long id,
+                 @ApiParam("category to replace") CategoryDto categoryDto);
 
+    @ApiOperation("Merge patch a category")
     @PATCH
     @Path("{id}")
     @Consumes("application/merge-patch+json")
-    void partialUpdate(@ApiParam("partial update patch exclude subcategories") @PathParam("id") Long id, String patch);
+    void partialUpdate(@ApiParam("partial update patch exclude subcategories") @PathParam("id") Long id,
+                       @ApiParam("the applied patch, make sure its valid") String patch);
 
     /**
      * SubCATEGORY operations:
      */
 
+    @ApiOperation("find subcategories by id")
     @GET
     @Path("{id}/subcategories")
-    Response findSubcategoriesById(@PathParam("id") Long id);
+    Response findSubcategoriesById(@ApiParam("id of the subcategory") @PathParam("id") Long id);
 
-
+    @ApiOperation("add a new subcategory to an existing category")
     @POST
     @Path("{id}/subcategories")
-    @ApiOperation("add a new subcategory")
-    Response create(@PathParam("id") Long id, @ApiParam("the subcategory to create") SubCategoryDTO subCategory);
+    Response create(@ApiParam("id of the category") @PathParam("id") Long id, @ApiParam("the subcategory to create") SubCategoryDTO subCategory);
 
 }

@@ -26,6 +26,8 @@ public class SubCategoryResource implements SubCategoryRestApi {
     @Context
     UriInfo uriInfo;
 
+
+    /*
     @Override
     public Response create(SubCategoryDTO subCategory) {
         if (subCategory == null)
@@ -38,9 +40,10 @@ public class SubCategoryResource implements SubCategoryRestApi {
         }
 
         URI categoryUri = uriInfo.getAbsolutePathBuilder().path("" + id).build();
-        //return Response.created(uriInfo.getBaseUriBuilder().path("/categories/" + id).build()).build();
+
         return Response.created(categoryUri).build();
     }
+    */
 
     @Override
     public List<SubCategoryDTO> findAll(Long id) {

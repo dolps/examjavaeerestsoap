@@ -29,15 +29,6 @@ import java.util.List;
 // http://localhost:8080/pg5100_exam/api/categories/1
 @Path("/categories")
 public class CategoryResource implements CategoryRestApi {
-
-    public void query() {
-        Response response =
-                ClientBuilder.newClient().target("http://www.google.com/book").request(MediaType.APPLICATION_JSON).get();
-        String body = response.readEntity(String.class);
-
-        CategoryDto dto = ClientBuilder.newClient().target("link").request().get(CategoryDto.class);
-    }
-
     @EJB
     private CategoryEJB categoryEJB;
     @EJB
@@ -57,7 +48,7 @@ public class CategoryResource implements CategoryRestApi {
         }
 
         URI categoryUri = uriInfo.getAbsolutePathBuilder().path("" + id).build();
-        //return Response.created(uriInfo.getBaseUriBuilder().path("/categories/" + id).build()).build();
+
         return Response.created(categoryUri).build();
     }
 
@@ -154,9 +145,8 @@ public class CategoryResource implements CategoryRestApi {
         subCat = subCategoryEJB.create(subCat);
         System.out.println("testtest" + subCat.getName() + " " + subCat.getId());
         URI categoryUri = uriInfo.getBaseUriBuilder().path("/subcategories/" + subCat.getId()).build();
-        return Response.created(categoryUri).build();
 
-        //return Response.status(301).location(UriBuilder.fromUri("subcategories?parentId=" + id).build()).build();
+        return Response.created(categoryUri).build();
     }
 
     private WebApplicationException wrapException(Exception e) throws WebApplicationException {
@@ -168,13 +158,4 @@ public class CategoryResource implements CategoryRestApi {
             return new WebApplicationException("Internal error", 500);
         }
     }
-
-    /*
-    @Override
-    @PUT
-    @Path("id/{id}")
-    public Response deprecatedUpdate(@PathParam("id") Long id, CategoryDto categoryDto) {
-        return Response.status(301).location(UriBuilder.fromUri("categories/" + id).build()).build();
-    }
-    */
 }

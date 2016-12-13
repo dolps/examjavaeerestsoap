@@ -169,6 +169,7 @@ public class QuizResource implements QuizRest {
 
     @Override
     public QuizDto findRandomQuiz() {
+
         Quiz quiz = quizEJB.findRandom();
         if (quiz == null) {
             throw new WebApplicationException("no quizzes found", 404);

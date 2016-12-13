@@ -92,51 +92,17 @@
                 <artifactId>maven-war-plugin</artifactId>
             </plugin>
 
-
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-            </plugin>
-
-            <!-- experimental
-
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
-                    <add-user>
-                        <users>
-                            <user>
-                                <username>admin</username>
-                                <password>admin</password>
-                            </user>
-                        </users>
-                    </add-user>
-                    <javaOpts>
-                        Make it point to WireMock
-                        <javaOpt>-DnasdaqAddress=localhost:8099</javaOpt>
-                    </javaOpts>
+                    <skip>false</skip>
+                    <java-opts>
+                        -javaagent:${settings.localRepository}${fs}org${fs}jacoco${fs}org.jacoco.agent${fs}${version.jacoco}${fs}org.jacoco.agent-${version.jacoco}-runtime.jar=destfile=${basedir}${fs}target${fs}jacoco-it.exec
+                    </java-opts>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>init</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>shutdown</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>undeploy</goal>
-                            <goal>shutdown</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-        -->
+
 
 
             <plugin>

@@ -39,7 +39,6 @@ public class GameResourceSoapImplTestIT {
                 wireMockConfig().port(2222).notifier(new ConsoleNotifier(true))
         );
 
-
         List<String> answerss = new ArrayList<>(Arrays.asList("false", "false", "true", "false"));
         QuizDto quizDto = new QuizDto("question", answerss, 2);
         quizDto.id = 1L;

@@ -27,9 +27,17 @@ openshift-version
 # Note
 I've had to do some hack fixes in the gameSoap module, there was some issues combining
 Wiremock with soap and client API, thats why some calls may seem a little
-redundant and abnormal but i think its all been commented.
+redundant and abnormal but i think its all been commented, and for the hystrix call
+it kinda looses the point of using a circuit breaker for the soap module, but for gameAPI.
+It should be good, it uses its own client from jersey and i've had no problems with that.
 I really hope it builds fine on your laptop, its working fine on mine now
 after hours of trying. otherwise you know which module to ignore.
 
 The application quizimplementation runs on Open shift and can bee seen
-at
+at http://javaeeexam-examjavaee2016.44fs.preview.openshiftapps.com/api/swagger.json,
+Thats why there had to be two profiles in the pom so only the quiz implementation will
+be ran. The api is open and accessible but there was issue with cross origin for swagger UI,
+i guess it has to do with swagger html pointing to localhost:8080, since
+the cors filter didnt have any impact on it
+
+

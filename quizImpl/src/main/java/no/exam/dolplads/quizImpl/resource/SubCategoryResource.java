@@ -1,6 +1,7 @@
 package no.exam.dolplads.quizImpl.resource;
 
 import com.google.common.base.Throwables;
+import no.exam.dolplads.entities.entity.SubCategory;
 import no.exam.dolplads.entities.service.SubCategoryEJB;
 import no.exam.dolplads.quizApi.dto.SubCategoryDTO;
 import no.exam.dolplads.quizApi.restApi.SubCategoryRestApi;
@@ -26,25 +27,6 @@ public class SubCategoryResource implements SubCategoryRestApi {
     @Context
     UriInfo uriInfo;
 
-
-    /*
-    @Override
-    public Response create(SubCategoryDTO subCategory) {
-        if (subCategory == null)
-            throw new BadRequestException("resource is null");
-        Long id = null;
-        try {
-            id = subCategoryEJB.create(CategoryConverter.transformSub(subCategory)).getId();
-        } catch (Exception e) {
-            throw wrapException(e);
-        }
-
-        URI categoryUri = uriInfo.getAbsolutePathBuilder().path("" + id).build();
-
-        return Response.created(categoryUri).build();
-    }
-    */
-
     @Override
     public List<SubCategoryDTO> findAll(Long id) {
         if (id != null) {
@@ -56,16 +38,10 @@ public class SubCategoryResource implements SubCategoryRestApi {
 
     @Override
     public SubCategoryDTO findById(Long id) {
-        return CategoryConverter.transformSub(subCategoryEJB.findById(id));
-    }
-
-    private WebApplicationException wrapException(Exception e) throws WebApplicationException {
-
-        Throwable cause = Throwables.getRootCause(e);
-        if (cause instanceof ConstraintViolationException) {
-            return new WebApplicationException("Invalid constraints on input: " + cause.getMessage(), 400);
-        } else {
-            return new WebApplicationException("Internal error", 500);
+        SubCategory subCategory = subCategoryEJB.findById(id);
+        if (subCategory == null) {
+            throw new WebApplicationException("resource not found", 404);
         }
+        return CategoryConverter.transformSub(subCategory);
     }
 }

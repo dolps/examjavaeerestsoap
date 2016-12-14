@@ -14,19 +14,10 @@ import java.util.List;
  */
 @Api(value = "/subcategories", description = "CRUD action for subCategories")
 public interface SubCategoryRestApi {
-    /*
-        // TODO: 12/12/2016 deprecate?
-        @Override
-        //@Deprecated
-        @ApiOperation("create a subcategory")
-        @POST
-        Response create(@ApiParam("subcategory to create") SubCategoryDTO subCategory);
-    */
     @ApiOperation("find all subCategories")
     @GET
     List<SubCategoryDTO> findAll(@ApiParam("filter by parentId")
                                  @QueryParam("parentId") Long id);
-
 
     @ApiOperation(value = "get subCategory by id")
     @GET

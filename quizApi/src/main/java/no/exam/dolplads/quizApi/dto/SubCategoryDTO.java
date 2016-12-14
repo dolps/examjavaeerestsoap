@@ -13,5 +13,6 @@ public class SubCategoryDTO {
 
     @ApiModelProperty(value = "the parent category", required = true)
     public CategoryDto parentCategory;
+    @ApiModelProperty("the name of the subcategory")
     public String name;
 }

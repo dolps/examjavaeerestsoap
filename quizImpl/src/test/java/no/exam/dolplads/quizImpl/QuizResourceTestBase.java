@@ -50,7 +50,6 @@ public class QuizResourceTestBase {
                     .as(ListDto.class);
 
             listDto.list.stream()
-                    //the "NewsDto" get unmarshalled into a map of fields
                     .map(n -> ((Map) n).get("id"))
                     .forEach(id ->
                             given().delete("/" + id)

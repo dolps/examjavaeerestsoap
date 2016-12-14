@@ -8,10 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
-/*
-    A generic DTO in HAL format to represent a list of DTOs,
-    with all needed links and pagination info
- */
 @ApiModel(description = "Paginated list of resources with HAL links ")
 public class ListDto<T> extends HalObject {
 
@@ -27,12 +23,6 @@ public class ListDto<T> extends HalObject {
     @ApiModelProperty("The total number of elements in all pages")
     public Integer totalSize;
 
-    /*
-        Note: this technically does not override the _links in the superclass
-        (that is not possible in Java), but rather hides it away.
-        Jackson is smart enough to properly handle this situation, but
-        other JSON libraries might not.
-     */
     @ApiModelProperty("HAL links")
     public ListLinks _links;
 

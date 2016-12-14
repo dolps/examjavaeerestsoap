@@ -19,7 +19,6 @@ import javax.ws.rs.core.UriBuilder;
 @WebService(endpointInterface = "com.woact.dolplads.exam2016.soap.api.GameResourceSoap")
 public class GameResourceSoapImpl implements GameResourceSoap {
     private UriBuilder base;
-    //private Client client;
 
     public GameResourceSoapImpl() {
         this.base = UriBuilder.fromUri("http://localhost:8090/quiz/api/quizzes");

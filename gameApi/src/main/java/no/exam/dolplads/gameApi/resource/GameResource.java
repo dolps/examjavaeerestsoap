@@ -1,6 +1,7 @@
 package no.exam.dolplads.gameApi.resource;
 
 import com.google.gson.Gson;
+import io.swagger.annotations.ApiOperation;
 import no.exam.dolplads.gameCommands.commands.GetQuizCommand;
 import no.exam.dolplads.quizApi.dto.QuizDto;
 import no.exam.dolplads.quizApi.dto.CategoryDto;
@@ -23,7 +24,7 @@ import java.util.List;
  * to be reached at http://localhost:9000/game/api/games
  * swagger at http://localhost:9000/game/
  */
-@Api
+@Api(value = "/games", description = "resource for a game of quiz")
 @Path("/games")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -36,6 +37,7 @@ public class GameResource {
         this.base = UriBuilder.fromUri(externalHost + "/quiz/api/quizzes");
     }
 
+    @ApiOperation("get a game chosen randomly")
     @GET
     @Path("random")
     public GameDto getRandomGame() {
@@ -51,9 +53,9 @@ public class GameResource {
 
     }
 
+    @ApiOperation("post an answer to the quiz")
     @POST
     public ResultDto postAnswer(AnswerDto answerDto) {
-        //Response quizResponse = new GetQuiz(base.build() + "/" + answerDto.quizId).execute();
         Response quizResponse = new GetQuizCommand(client, base.build() + "/" + answerDto.quizId).execute();
         QuizDto dto = new Gson().fromJson(quizResponse.getEntity().toString(), QuizDto.class);
 
@@ -64,14 +66,7 @@ public class GameResource {
         }
     }
 
-
-    @Produces(MediaType.TEXT_PLAIN)
-    @GET
-    @Path("hei")
-    public String hello() {
-        return "helloi";
-    }
-
+    @ApiOperation("get list of existing categories")
     @GET
     public List<CategoryDto> getCategories() {
         CategoryDto dtos[] = client.target(base.build()).request().get(CategoryDto[].class);

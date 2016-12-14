@@ -60,14 +60,21 @@ public class QuizResource implements QuizRest {
         return Response.created(categoryUri).build();
     }
 
-    // TODO: 12/12/2016 CHECK INPUT
-    // // TODO: 12/12/2016 Check if wrong to remove limit
     @Override
     public ListDto<QuizDto> findAll(int offset, int limit, long subCategoryId) {
+        if (offset < 0) {
+            throw new WebApplicationException("Negative offset: " + offset, 400);
+        }
+
+        if (limit < 1) {
+            throw new WebApplicationException("Limit should be at least 1: " + limit, 400);
+        }
+
         List<Quiz> quizList = quizEJB.findAll(offset, limit, subCategoryId);
 
-
-        System.out.println("do we even get here?");
+        if (offset != 0 && offset >= quizList.size()) {
+            throw new WebApplicationException("Offset " + offset + " out of bound " + quizList.size(), 400);
+        }
 
         UriBuilder builder = uriInfo.getBaseUriBuilder()
                 .path("/quizzes")

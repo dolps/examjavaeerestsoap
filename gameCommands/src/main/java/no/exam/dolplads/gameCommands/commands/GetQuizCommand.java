@@ -31,7 +31,7 @@ public class GetQuizCommand extends HystrixCommand<Response> {
         this.client = client;
 
     }
-    // little buggy thisone(use it for soap)
+    // little buggy thisone(use it only for soap)
     public GetQuizCommand(String fetchUrl) {
         super(HystrixCommandGroupKey.Factory.asKey("Interactions with quizAPI"));
 

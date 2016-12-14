@@ -432,7 +432,7 @@
                 <!--<module>gameRest</module> -->
                 <module>entities</module>
                 <module>quizImpl</module>
-                <module>report</module>
+                <module>quizApi</module>
             </modules>
             <build>
                 <finalName>SampleApp</finalName>

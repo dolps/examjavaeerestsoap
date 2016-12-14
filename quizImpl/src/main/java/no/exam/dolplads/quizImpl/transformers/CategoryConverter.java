@@ -40,7 +40,6 @@ public class CategoryConverter {
                 .collect(Collectors.toList());
 
         return dtos;
-        //return categories.stream().map(category -> transform(category));
     }
 
     public static Category transform(CategoryDto categoryDto) {
@@ -52,7 +51,6 @@ public class CategoryConverter {
         return category;
     }
 
-    // todo add fields
     public static SubCategory transformSub(SubCategoryDTO category) {
         Objects.requireNonNull(category);
         SubCategory subCategory = new SubCategory();
@@ -73,7 +71,6 @@ public class CategoryConverter {
         return subCategories.stream().map(CategoryConverter::transformSub).collect(Collectors.toList());
     }
 
-    // TODO: 12/12/2016 add false declaration to top
     public static SubCategoryDTO transformSub(SubCategory subCategory) {
         Objects.requireNonNull(subCategory);
         SubCategoryDTO dto = new SubCategoryDTO();

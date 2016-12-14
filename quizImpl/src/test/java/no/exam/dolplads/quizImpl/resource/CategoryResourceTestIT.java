@@ -28,22 +28,15 @@ public class CategoryResourceTestIT extends CategoryResourceTestBase {
 
     private String subCatBasePath = "/quiz/api/subcategories";
 
-    @Test // TODO: 06/12/2016 implement check status
-    public void createAndFindById() throws Exception {
+    @Test
+    public void testCreateCategory() throws Exception {
         CategoryDto category = new CategoryDto();
         category.name = "someText";
 
         String location = postCategory(category);
         given().accept(ContentType.JSON).get(location).then().statusCode(200).body("name", is("someText"));
-
-        /*
-        when().request(Method.GET, "id/{id}", id).then().assertThat()
-                .body("id", equalTo(id)).and().body("name", equalTo(category.name));
-                */
-
     }
 
-    // TODO: 12/12/2016 check the  patch package as well
     @Test
     public void testCreateCategoryRawHttp() throws Exception {
         String message = "POST /quiz/api/categories HTTP/1.1\n";
@@ -95,13 +88,6 @@ public class CategoryResourceTestIT extends CategoryResourceTestBase {
         response.body("name", is("subCategory"));
     }
 
-
-    /*
-    ◦ All categories with false expand: the subcategory should not be present
-    ◦ All categories with true expand: the subcategory should be present
-    ◦ Specific category with false expand: the subcategory should not be present
-    ◦ Specific category with true expand: the subcategory should be present
-     */
     @Test
     public void testExpand() throws Exception {
         CategoryDto category = new CategoryDto();
@@ -200,73 +186,6 @@ public class CategoryResourceTestIT extends CategoryResourceTestBase {
                 .statusCode(200).body("size", is(2));
     }
 
-
-    @Ignore
-    @Test
-    public void invalid_create_throws400() throws Exception {
-        CategoryDto category = new CategoryDto();
-        given().when().contentType(ContentType.JSON)
-                .body(category)
-                .post()
-                .then()
-                .statusCode(400);
-    }
-
-    @Ignore
-    @Test
-    public void findAll() throws Exception {
-        int cursize = given().contentType(ContentType.JSON)
-                .request(Method.GET).then().statusCode(200).extract().body().as(List.class).size();
-
-        CategoryDto category = new CategoryDto();
-        category.name = "catetext";
-        postCategory(category);
-
-        given().contentType(ContentType.JSON).get().then().statusCode(200).body("size()", is(cursize + 1));
-    }
-
-    @Ignore // TODO: 06/12/2016 fix the contenttype
-    @Test
-    public void update() throws Exception {
-        CategoryDto dto = new CategoryDto();
-        dto.name = "tixt";
-        String location = postCategory(dto);
-        System.out.println("location: " + location);
-        dto = given().accept(ContentType.JSON).get(location).then().statusCode(200).extract().as(CategoryDto.class);
-
-        dto.name = "other name";
-        putCategory(dto, location);
-
-        given().accept(ContentType.JSON)
-                .get(location)
-                .then()
-                .statusCode(200)
-                //.body("name", nullValue())
-                .body("name", is(dto.name));
-    }
-
-    @Ignore
-    @Test
-    public void deleteCategory() throws Exception {
-        CategoryDto dto = new CategoryDto();
-        dto.name = "yo";
-
-        ValidatableResponse response =
-                given().contentType(ContentType.JSON)
-                        .body(dto)
-                        .post()
-                        .then()
-                        .statusCode(201);
-
-        String id = response.extract().asString();
-        System.out.println("the id: " + id);
-        String loc = response.extract().header("location");
-        System.out.println(loc);
-
-        delete(loc).then().statusCode(204);
-        delete(loc).then().statusCode(404);
-    }
-
     private String postCategory(CategoryDto category) {
         return given().contentType(ContentType.JSON)
                 .body(category)
@@ -276,7 +195,6 @@ public class CategoryResourceTestIT extends CategoryResourceTestBase {
                 .extract().header("location");
     }
 
-    // url == /categories/{id}/subcategories
     private String postSubCategory(SubCategoryDTO subCategoryDTO) {
         return given().contentType(ContentType.JSON)
                 .body(subCategoryDTO)

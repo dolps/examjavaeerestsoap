@@ -35,11 +35,6 @@ public class CategoryResourceTestBase {
                 .statusCode(200)
                 .extract().as(CategoryDto[].class));
 
-
-        /*
-            Code 204: "No Content". The server has successfully processed the request,
-            but the return HTTP response will have no body.
-         */
         categoryDtos.stream().forEach(dto ->
                 given().pathParam("id", dto.id)
                         .delete("/{id}")

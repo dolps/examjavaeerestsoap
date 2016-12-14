@@ -16,17 +16,11 @@ import no.exam.dolplads.quizApi.dto.CategoryDto;
 import javax.ejb.EJB;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
-/**
- * Created by dolplads on 29/11/2016.
- * <p>
- * querying
- */ // Hibernate.initialize(entity.getAddresses());
-// http://localhost:8080/pg5100_exam/api/categories/1
+
 @Path("/categories")
 public class CategoryResource implements CategoryRestApi {
     @EJB
@@ -131,14 +125,11 @@ public class CategoryResource implements CategoryRestApi {
         }
     }
 
-    //     @Path("{id}/subcategories")
     @Override
     public Response findSubcategoriesById(Long id) {
         return Response.status(301).location(UriBuilder.fromUri("subcategories?parentId=" + id).build()).build();
     }
 
-    // permanent redirect “/subcategories?parentId=id”.
-    //     @Path("{id}/subcategories")
     @Override
     public Response create(Long id, SubCategoryDTO subCategory) {
         SubCategory subCat = CategoryConverter.transformSub(subCategory);

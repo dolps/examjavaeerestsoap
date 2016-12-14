@@ -15,7 +15,6 @@ import java.util.List;
  */
 @Stateless
 @Getter
-@Setter
 @NoArgsConstructor
 public class SubCategoryEJB extends CrudEJB<Long, SubCategory> {
     private SubCategoryRepository subCategoryRepository;

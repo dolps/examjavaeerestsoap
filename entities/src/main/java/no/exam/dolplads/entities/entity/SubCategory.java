@@ -14,7 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +22,4 @@ public class SubCategory {
     @ManyToOne
     @JoinColumn
     private Category parentCategory;
-
-    public SubCategory(String name, Category parentCategory) {
-        this.name = name;
-        this.parentCategory = parentCategory;
-    }
 }

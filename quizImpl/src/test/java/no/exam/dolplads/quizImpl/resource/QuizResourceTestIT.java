@@ -1,5 +1,6 @@
 package no.exam.dolplads.quizImpl.resource;
 
+import no.exam.dolplads.entities.entity.Quiz;
 import no.exam.dolplads.quizApi.dto.ListDto;
 import no.exam.dolplads.quizApi.dto.QuizDto;
 import io.restassured.http.ContentType;
@@ -270,4 +271,61 @@ public class QuizResourceTestIT extends QuizResourceTestBase {
 
         return answers;
     }
+
+    ///////////////////////////////////////
+    ///////////Negative tests//////////////
+    ///////////////////////////////////////
+    @Test
+    public void testCreateNegatives() throws Exception {
+        List<String> answers = getAnswers();
+
+        QuizDto quizDto = new QuizDto("which is correct", answers, 2);
+        quizDto.subCategoryId = subCategory.id;
+
+        String location = postQuiz(quizDto);
+        Long id = given().accept(ContentType.JSON).get(location).then().statusCode(200).extract().as(QuizDto.class).id;
+
+    }
+
+    // testing for diff invalid inputs
+    @Test
+    public void testCreateNegative() throws Exception {
+        Quiz q = new Quiz();
+
+        given().contentType(ContentType.JSON).body(q).post().then().statusCode(400);
+        q.setSubCategoryId(-1L);
+        given().contentType(ContentType.JSON).body(q).post().then().statusCode(404);
+        q.setSubCategoryId(subCategory.id);
+        given().contentType(ContentType.JSON).body(q).post().then().statusCode(400);
+
+    }
+
+    @Test
+    public void testPartialUpdateNegative() throws Exception {
+        patchWithMergeJSon(-1, "{\"question\":\"newQuestion\"}", 404); // non existing
+
+        List<String> answers = getAnswers();
+
+        QuizDto quizDto = new QuizDto("which is correct", answers, 2);
+        quizDto.subCategoryId = subCategory.id;
+
+        String location = postQuiz(quizDto);
+        Long id = given().accept(ContentType.JSON).get(location).then().statusCode(200).extract().as(QuizDto.class).id;
+
+        patchWithMergeJSon(id, "{\"question\":rubbish\"newQuestion\"}", 400);
+        patchWithMergeJSon(id, "{\"id\":\"100\"}", 409);
+    }
+
+    @Test
+    public void testFindNonExisting() throws Exception {
+        given().accept(ContentType.JSON).get("/-1").then().statusCode(404);
+    }
+
+    @Test
+    public void testFindAllNegative() throws Exception {
+        given().queryParam("limit", -1).get().then().statusCode(400);
+        given().queryParam("offset", -1).get().then().statusCode(400);
+        given().queryParam("offset", 10).get().then().statusCode(400);
+    }
+
 }

@@ -7,6 +7,8 @@ import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import io.restassured.internal.http.Status;
+import no.exam.dolplads.entities.entity.Category;
 import no.exam.dolplads.quizImpl.CategoryResourceTestBase;
 import no.exam.dolplads.quizImpl.HttpUtil;
 import no.exam.dolplads.quizApi.dto.SubCategoryDTO;
@@ -218,6 +220,45 @@ public class CategoryResourceTestIT extends CategoryResourceTestBase {
                 .patch("{id}", id)
                 .then()
                 .statusCode(statusCode);
+    }
+
+
+    //////////////////////////
+    /////NEGATIVE TESTS//////
+    ////////////////////////
+
+    @Test
+    public void testCreateWithNullObject() throws Exception {
+        given().contentType(ContentType.JSON)
+                .body("{}")
+                .post()
+                .then()
+                .statusCode(400);
+    }
+
+    @Test
+    public void testDeleteNonExisting() throws Exception {
+        given().delete("/-1").then().statusCode(404);
+    }
+
+    @Test
+    public void testPartialNegative() throws Exception {
+        CategoryDto dto = new CategoryDto();
+        dto.name = "hei";
+
+        patchWithMergeJSon(-1L, "{\"name\":\"newName\"}", 404);
+
+
+        CategoryDto category = new CategoryDto();
+        category.name = "name";
+        String location1 = postCategory(category);
+
+        // fetch id
+        category = given().accept(ContentType.JSON).get(location1).
+                then().statusCode(200).extract().as(CategoryDto.class);
+
+        patchWithMergeJSon(category.id, "{\"name\":invalid\"newName\"}", 400);
+        patchWithMergeJSon(category.id, "{\"id\":\"" + category.id + "\"}", 409);
     }
 
 }

@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Category {
     @Id
     @GeneratedValue
@@ -29,14 +28,5 @@ public class Category {
 
     public Category(String name) {
         this.name = name;
-    }
-
-    public void addSubCategory(SubCategory subCategory) {
-        if (subCategories == null) {
-            subCategories = new ArrayList<>();
-        }
-        if (!subCategories.contains(subCategory)) {
-            subCategories.add(subCategory);
-        }
     }
 }

@@ -74,23 +74,6 @@ public class CategoryResource implements CategoryRestApi {
     }
 
     @Override
-    public void replace(Long id, CategoryDto categoryDto) {
-        if (!id.equals(categoryDto.id)) {
-            throw new WebApplicationException("ids dont match, not allowed to change id on deprecatedUpdate", 409);//Response.Status.CONFLICT
-        }
-        Category found = categoryEJB.findById(id);
-        if (found == null) {
-            throw new WebApplicationException("could not findAll resource with id: " + id, 404);
-        }
-
-        try {
-            categoryEJB.update(CategoryConverter.transform(categoryDto));
-        } catch (Exception e) {
-            throw wrapException(e);
-        }
-    }
-
-    @Override
     public void partialUpdate(Long id, String patch) {
         Category c = categoryEJB.findById(id);
         if (c == null) {

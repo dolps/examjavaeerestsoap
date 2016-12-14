@@ -42,8 +42,8 @@ public class QuizResource implements QuizRest {
 
     @Override
     public Response create(QuizDto quiz) {
-        if (quiz == null) {
-            throw new BadRequestException("resource is null");
+        if (quiz.subCategoryId == null) {
+            throw new WebApplicationException("subcategory must be provided", 400);
         }
         SubCategory persisted = categoryEJB.findById(quiz.subCategoryId);
         if (persisted == null) {

@@ -42,12 +42,6 @@ public interface CategoryRestApi {
     @Path("{id}")
     void delete(@ApiParam("id of the category") @PathParam("id") Long id);
 
-    @ApiOperation("Replace a category")
-    @PUT
-    @Path("{id}")
-    void replace(@ApiParam("id of the category") @PathParam("id") Long id,
-                 @ApiParam("category to replace") CategoryDto categoryDto);
-
     @ApiOperation("Merge patch a category")
     @PATCH
     @Path("{id}")

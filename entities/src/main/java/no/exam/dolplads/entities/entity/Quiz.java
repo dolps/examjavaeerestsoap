@@ -33,11 +33,4 @@ public class Quiz {
     @Min(0)
     @Max(3)
     private int correctIndex = -1;
-
-    public Quiz(Long subCategoryId, String question, List<String> answers, int correctIndex) {
-        this.subCategoryId = subCategoryId;
-        this.question = question;
-        this.answers = answers;
-        this.correctIndex = correctIndex;
-    }
 }

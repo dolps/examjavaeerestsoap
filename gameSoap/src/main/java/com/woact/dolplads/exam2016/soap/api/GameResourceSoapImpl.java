@@ -32,8 +32,8 @@ public class GameResourceSoapImpl implements GameResourceSoap {
         if (quizResponse.getStatus() == 200) {
             QuizDto dto = new Gson().fromJson(quizResponse.getEntity().toString(), QuizDto.class);
             return new GameDto(dto.id, dto.question, dto.answers);
-        } else { // configuration of wiremock not allways stable (safeguarding for the sake of the exam here..)
-            throw new RuntimeException("resource unavailable"); // should have been a 500...
+        } else {
+            throw new RuntimeException("resource unavailable"); // should have been 500 webapp exc
         }
     }
 
@@ -49,6 +49,6 @@ public class GameResourceSoapImpl implements GameResourceSoap {
                 return new ResultDto(false);
             }
         }
-        return new ResultDto(false);
+        throw new RuntimeException("resource unavailable"); // should have been 500 webapp exc
     }
 }

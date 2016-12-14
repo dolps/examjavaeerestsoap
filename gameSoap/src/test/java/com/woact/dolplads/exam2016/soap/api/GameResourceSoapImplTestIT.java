@@ -70,6 +70,8 @@ public class GameResourceSoapImplTestIT {
         } catch (Exception e) {
             throw new RuntimeException();
         }
+
+        fail();
     }
 
 
@@ -96,6 +98,24 @@ public class GameResourceSoapImplTestIT {
 
         ResultDto resultDto = ws.postAnswer(answerDto);
         assertFalse(resultDto.isCorrect());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testServerCrashMiddleOfGame() throws Exception {
+        GameDto random = ws.getRandomGame();
+
+        AnswerDto answerDto = new AnswerDto();
+        answerDto.setQuizId(random.getId());
+        answerDto.setCorrectAnswerIndex(3);
+        server.stop();
+        try {
+            ResultDto resultDto = ws.postAnswer(answerDto);
+            assertFalse(resultDto.isCorrect());
+
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+        fail();
     }
 
     private static void stubQuizEndpoint(String json, String relativeUrl) {

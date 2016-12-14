@@ -31,18 +31,21 @@ public class GetQuizCommand extends HystrixCommand<Response> {
         this.client = client;
 
     }
+
     // little buggy thisone(use it only for soap)
     public GetQuizCommand(String fetchUrl) {
         super(HystrixCommandGroupKey.Factory.asKey("Interactions with quizAPI"));
 
         this.fetchUrl = fetchUrl;
         this.client = ClientBuilder.newClient();
+
         // seems like this work as a warm up for the next request..
         try {
             QuizDto dto = client.target(fetchUrl).request(MediaType.APPLICATION_JSON).get(QuizDto.class);
         } catch (Exception e) {
             System.out.println("error fetching quiz was caught");
         }
+
     }
 
     @Override

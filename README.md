@@ -25,13 +25,15 @@ openshift-version
  *generates test result based on the modules
 
 # Note
-I've had to do some hack fixes in the gameSoap module, there was some issues combining
+I've had to do some hack fixes in QuizCommand for the gameSoap module, there was some issues combining
 Wiremock with soap and client API, thats why some calls may seem a little
 redundant and abnormal but i think its all been commented, and for the hystrix call
 it kinda looses the point of using a circuit breaker for the soap module, but for gameAPI.
 It should be good, it uses its own client from jersey and i've had no problems with that.
 I really hope it builds fine on your laptop, its working fine on mine now
-after hours of trying. otherwise you know which module to ignore.
+after hours of trying back and forth different solutions. otherwise you know which module to ignore,
+from the project. I hope you take into consideration the different environments here,
+and that yours may run differently than mine, if there were to be an issue with that module.
 
 The application quizimplementation runs on Open shift and can bee seen
 at http://javaeeexam-examjavaee2016.44fs.preview.openshiftapps.com/api/swagger.json,

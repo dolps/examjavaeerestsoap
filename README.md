@@ -1,4 +1,5 @@
-openshift-version
+Exam in Java Enterprise 2 Rest Api's
+Rest,Soap
 ====================
 
 #gameAPI

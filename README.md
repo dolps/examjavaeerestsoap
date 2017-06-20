@@ -35,11 +35,8 @@ after hours of trying back and forth different solutions. otherwise you know whi
 from the project. I hope you take into consideration the different environments here,
 and that yours may run differently than mine, if there were to be an issue with that module.
 
-The application quizimplementation runs on Open shift and can bee seen
-at http://javaeeexam-examjavaee2016.44fs.preview.openshiftapps.com/api/swagger.json,
-Thats why there had to be two profiles in the pom so only the quiz implementation will
+The application quizimplementation ran earlier on Open shift,
+thats why there had to be two profiles in the pom so only the quiz implementation will
 be ran. The api is open and accessible but there was issue with cross origin for swagger UI,
 i guess it has to do with swagger html pointing to localhost:8080, since
 the cors filter didnt have any impact on it
-
-
